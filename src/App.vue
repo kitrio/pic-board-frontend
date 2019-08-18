@@ -6,10 +6,10 @@
         <span class="font-weight-light">Pic</span>
       </v-toolbar-title>
       <v-spacer />
-      <router-link to="user/login">
+      <router-link :to="{name: 'Login'}">
         <v-btn color="white">로그인</v-btn>
       </router-link>
-      <router-link to="user/signup">
+      <router-link :to="{name: 'SignUp'}">
         <v-btn color="blue">회원가입</v-btn>
       </router-link>
     </v-app-bar>
