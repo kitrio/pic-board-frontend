@@ -2,30 +2,37 @@
   <v-app>
     <v-app-bar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
+        <span>Board</span>
+        <span class="font-weight-light">Pic</span>
       </v-toolbar-title>
       <v-spacer />
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
+      <router-link to="user/login">
+        <v-btn color="white">로그인</v-btn>
+      </router-link>
+      <router-link to="user/signup">
+        <v-btn color="blue">회원가입</v-btn>
+      </router-link>
     </v-app-bar>
 
     <v-content>
       <router-view />
     </v-content>
+    <v-footer
+      absolute
+      class="font-weight-medium"
+    >
+      <v-col
+        cols="12"
+      >
+      {{ new Date().getFullYear()}}
+      </v-col>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
 export default {
-  name: 'App',
-  data: () => ({
-    
-  })
-}
+  name: "App",
+  data: () => ({})
+};
 </script>
