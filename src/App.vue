@@ -6,11 +6,22 @@
         <span class="font-weight-light">Pic</span>
       </v-toolbar-title>
       <v-spacer />
-      <router-link :to="{name: 'Login'}">
-        <v-btn color="white">로그인</v-btn>
-      </router-link>
+      <v-container v-if='memberInfo === null'>
+        <router-link :to="{name: 'Login'}">
+          <v-btn color="white">
+            로그인
+          </v-btn>
+        </router-link>
+      </v-container>
+      <v-container v-else>
+        <v-btn @click="logOut">
+          로그아웃
+        </v-btn>
+      </v-container>
       <router-link :to="{name: 'SignUp'}">
-        <v-btn color="blue">회원가입</v-btn>
+        <v-btn color="blue">
+          회원가입
+        </v-btn>
       </router-link>
     </v-app-bar>
 
@@ -24,7 +35,7 @@
       <v-col
         cols="12"
       >
-      {{ new Date().getFullYear()}}
+        {{ new Date().getFullYear() }}
       </v-col>
     </v-footer>
   </v-app>
@@ -33,6 +44,19 @@
 <script>
 export default {
   name: "App",
-  data: () => ({})
+  data: () => ({
+     
+  }),
+  computed: {
+    memberInfo() {
+      return this.$store.state.member.myInfo
+    }
+  },
+  methods: {
+    logOut(){
+      this.$store.dispatch('member/logOut',null)
+    }
+  }
+
 };
 </script>

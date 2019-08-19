@@ -15,14 +15,11 @@ const mutations = {
 }
 
 const actions = {
-    signUp(context, payload) {
-      context.commit('setMyInfo', payload)
+    logIn({ commit }, payload) {
+        commit('setMyInfo', payload)
     },
-    logIn(context, payload) {
-        context.commit('setMyInfo', payload)
-    },
-    logOut(context) {
-        context.commit('setMyInfo', null)
+    logOut({ commit }) {
+        commit('setMyInfo', null)
     }
 }
 
