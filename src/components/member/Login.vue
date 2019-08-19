@@ -12,6 +12,7 @@
         sm="10"
       >
         <v-form
+          ref="form"
           method="post"
         >
           <v-text-field
@@ -57,20 +58,32 @@ export default {
         }
     },
     methods: {
-        login(){
-            let form = new FormData()
-            form.append('memberid', this.userid)
-            form.append('password',this.password)
-            this.axios({
-                method: 'post',
-                headers: {
-                  'Access-Control-Allow-Origin': 'http://localhost:8080',
-                },
-                url : "http://localhost:3010/authlogin",
-                data: form,
-                withcredentials : true,
-            })
+      
+      login(){
+        if(this.$refs.form.validate()){
+          let form = new FormData()
+          form.append('memberid', this.userid)
+          form.append('password',this.password)
+          this.axios({
+              method: 'post',
+              headers: {
+                'Access-Control-Allow-Origin': 'http://localhost:8080',
+              },
+              url : 'http://localhost:3010/authlogin',
+              data: form,
+              withcredentials : true,
+          })
+          .then(response =>{
+            if(response.status === 200){
+              this.$store.dispatch('member/logIn', {
+                memberid: this.userid,
+                password: this.password
+              })
+              this.$router.push('/')
+            }
+          })
         }
+      }
     },
 }
 </script>
