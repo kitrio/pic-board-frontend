@@ -96,13 +96,14 @@ export default {
             'Access-Control-Allow-Origin': 'http://localhost:8080',
             'Content-Type': 'application/json',
           },
-          url: 'http://localhost:3010/member/signup',
-          data: {"memberId":this.idField , "password":this.passwordField,"nickname":this.nicknameField},//,"regdata":20190101,"lastlogin":20190101,"authinfo":"user_rol"},
+          url: '/member/signup',
+          data: {"memberId":this.idField , "password":this.passwordField,"nickname":this.nicknameField},
           withCredentials: true
         })
         .then(res => {
             if(res.status == 200){
               alert('회원가입 되었습니다.')
+              this.$router.push('/')
             }
           }).catch( error =>{
             console.log(error)
