@@ -58,7 +58,6 @@ export default {
         }
     },
     methods: {
-      
       login(){
         if(this.$refs.form.validate()){
           let form = new FormData()
@@ -66,18 +65,13 @@ export default {
           form.append('password',this.password)
           this.axios({
               method: 'post',
-              headers: {
-                'Access-Control-Allow-Origin': 'http://localhost:8080',
-              },
-              url : 'http://localhost:3010/authlogin',
+              url : '/authlogin',
               data: form,
-              withcredentials : true,
           })
           .then(response =>{
             if(response.status === 200){
               this.$store.dispatch('member/logIn', {
-                memberid: this.userid,
-                password: this.password
+                memberid: this.userid
               })
               this.$router.push('/')
             }
