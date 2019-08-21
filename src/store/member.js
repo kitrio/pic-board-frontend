@@ -19,7 +19,13 @@ const actions = {
         commit('setMyInfo', payload)
     },
     logOut({ commit }) {
-        commit('setMyInfo', null)
+        axios.post('/logout',{})
+          .then(() =>{            
+            commit('setMyInfo', null)
+        })
+        .catch((error) => {
+            console.error(error)
+        })
     }
 }
 
