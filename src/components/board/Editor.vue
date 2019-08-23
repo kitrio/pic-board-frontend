@@ -15,11 +15,13 @@
           오늘의 사진 하나
         </v-card-title>
         <v-form>
-          <v-textarea
-            
+          <img :src=" `${imgPath}`" />
+          <v-text-field
+            v-model="title"
+            label="제목"   
           />
           <v-btn
-            @click="sumbitText"
+            @click="submitText"
             color="white"
           >
             올리기
@@ -28,10 +30,11 @@
         </v-form>
         <v-form>
           <v-btn
+            @click="onClickImgInput"
             type="button"
-            @click="submitImg"
             color="blue">
-            사진 올리기
+            사진 +
+            <input ref="imgInput" type="file" hidden accept="image/*" @change="submitImg"/>
           </v-btn>
         </v-form>
       </v-col>
@@ -48,21 +51,34 @@
 export default {
     data(){
         return{
-            rules: {
-                required: value => !! value || '글을 입력해주세요!',
-            }
+          title: '',
+          rules: {
+              required: value => !! value || '글을 입력해주세요!',
+          }
         }
+    },
+    computed: {
+      imgPath: function(){
+        return process.env.VUE_APP_FILE_URL + this.$store.state.content.imgPath
+      }
     },
     methods: {
         submitText(){
-            let form = new FormData()
-            form.append('memberid', this.userid)
-            form.append('password',this.password)
+            const form = new FormData()
+            form.append('title', this.title)
             this.axios({
                 method: 'post',
-                url : '/list/write',
+                url : '/list/content/write',
                 data: form,
             })
+        },
+        submitImg(e){
+          const imgForm = new FormData()
+          imgForm.append('img',e.target.files[0])
+          this.$store.dispatch('content/imgSubmit',imgForm)
+        },
+        onClickImgInput(){
+          this.$refs.imgInput.click()
         }
     },
 }
