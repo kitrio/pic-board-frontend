@@ -18,6 +18,8 @@
           <v-text-field
             v-model="userid"
             label="ID"
+            :rules="[rules.requiredID,rules.max]"
+            counter
           />
           <v-text-field
             v-model="password"
@@ -52,9 +54,11 @@ export default {
             password: "",
             showpasswd: false,
             rules: {
-                required: value => !! value || '비밀번호를 입력해주세요',
-                min: v => v.length >= 8 || '최소 8자 이상 입력하세요'
-            }
+              requiredID: value => !! value || '아이디를 입력 해주세요',  
+              required: value => !! value || '비밀번호를 입력 해주세요',
+              min: v => v.length >= 8 || '최소 8자 이상 입력 하세요',
+              max: v => v.length <= 15 || '15자리 이하로 입력 해주세요'
+            },
         }
     },
     methods: {
@@ -74,6 +78,11 @@ export default {
                 memberid: this.userid
               })
               this.$router.push('/')
+            }
+          })
+          .catch(error =>{
+            if(error.response.status === 401){
+              alert("아이디 또는 비밀번호가 맞지 않습니다.")
             }
           })
         }
