@@ -40,7 +40,7 @@
             class="mr-4"
             @click="onSubmitSignUp"
           >
-            회원가입
+            가입하기
           </v-btn>
 
           <v-btn
@@ -75,9 +75,16 @@ export default {
        }
       }
     },
+    mounted: {
+      function() {
+        this.axios({
+          methods: 'post',
+          url: VUE_APP_BASE_URL+'/member/sigunup'
+        })
+      }
+    },
     methods: {
       onSubmitSignUp() {
-        
         // const CSRF_TOKEN
         // if (document.cookie.match(new RegExp(`XSRF-TOKEN=([^;]+)`))[1] == null){
         //   CSRF_TOKEN = document.cookie.match(new RegExp(`XSRF-TOKEN=([^;]+)`))[1]
@@ -92,13 +99,8 @@ export default {
         // form.append('X-CSRF-TOKEN',CSRF_TOKEN)
         this.axios({
           method: 'post',
-          headers: {
-            'Access-Control-Allow-Origin': 'http://localhost:8080',
-            'Content-Type': 'application/json',
-          },
           url: '/member/signup',
-          data: {"memberId":this.idField , "password":this.passwordField,"nickname":this.nicknameField},
-          withCredentials: true
+          data: {"memberId":this.idField , "password":this.passwordField,"nickname":this.nicknameField}
         })
         .then(res => {
             if(res.status == 200){
