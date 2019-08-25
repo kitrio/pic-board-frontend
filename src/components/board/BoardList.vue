@@ -1,27 +1,8 @@
 <template>
   <v-app id="board-list">
     <v-card-title>이번주 추천</v-card-title>
-    <!-- <masonry
-      :cols="5"
-      :gutter="20"
-    >
-      <div
-        v-for="(item, index) in posts"
-        :key="index"
-      >
-        {{ item.fileAltName }}
-        <router-link :to="{ name: 'Contents', params: { num: item.boardNum}}">
-          <v-img
-            :src="`${imgPath}${item.fileAltName}`"
-          />
-        </router-link>
-      </div>
-    </masonry> -->
     <v-container fluid grid-list-md>
       <v-layout row wrap>
-        <!-- <div
-            
-          > -->
         <v-flex xs12 sm6 md4 lg3 x3
           v-for="(item, index) in posts"
             :key="index"
@@ -36,7 +17,6 @@
             </router-link>
             </v-card>
         </v-flex>
-        <!-- </div> -->
       </v-layout>
     </v-container>
   </v-app>
