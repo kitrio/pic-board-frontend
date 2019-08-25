@@ -75,8 +75,10 @@ export default {
           .then(response =>{
             if(response.status === 200){
               this.$store.dispatch('member/logIn', {
-                memberid: this.userid
+                memberid: this.userid,
               })
+              this.$store.dispatch('member/getNickname')
+              this.getNickname()
               this.$router.push('/')
             }
           })
@@ -86,6 +88,15 @@ export default {
             }
           })
         }
+      },
+      getNickname(){
+        axios.post('/member/info')
+        .then((response) => {
+            alert(response.data + '님 로그인 되었습니다.')
+            Vue.set(this.$store.state.member.myInfo, 'nickname',response.data)
+        }).catch(()=>{
+
+        })
       }
     },
 }
