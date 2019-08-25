@@ -42,7 +42,7 @@ export default {
           headers: {
             Accept: 'application/json'
           },
-        url: `/list/best?date=2020-02-24`
+        url: `/list/best?date=${this.moment(new Date()).format('YYYY-MM-DD')}`
         })
         .then(response => {
           this.posts = response.data;
