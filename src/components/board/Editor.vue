@@ -14,27 +14,49 @@
         <v-card-title>
           오늘의 사진 하나
         </v-card-title>
-        <v-form>
-          <img :src=" `${imgPath}`" />
-          <v-text-field
-            v-model="title"
-            label="제목"   
-          />
-          <v-btn
-            @click="submitText"
-            color="white"
+        <!-- <v-img
+            v-model="imgTag"
+            :src="imgPath"
           >
-            올리기
-          </v-btn>
-          
-        </v-form>
+            
+          </v-img> -->
+        <!-- <v-img
+          :src="imgPathnpm"
+        /> -->
+
+        <v-img
+          v-if="init"
+          :src=" `${imgPath}`"
+          max-width="720px"
+        />
+        <v-text-field
+          v-model="title"
+          label="제목"   
+        />
+        <v-textarea
+          v-model="textContent"
+          label="이야기"
+        />
+        <v-btn
+          color="white"
+          @click="submitContent"
+        >
+          올리기
+        </v-btn>
         <v-form>
           <v-btn
-            @click="onClickImgInput"
             type="button"
-            color="blue">
+            color="blue"
+            @click="onClickImgInput"
+          >
             사진 +
-            <input ref="imgInput" type="file" hidden accept="image/*" @change="submitImg"/>
+            <input
+              ref="imgInput"
+              type="file"
+              hidden
+              accept="image/*"
+              @change="submitImg"
+            >
           </v-btn>
         </v-form>
       </v-col>
@@ -52,9 +74,12 @@ export default {
     data(){
         return{
           title: '',
+          textContent: '',
+          filePath: this.$store.state.content.imgPath,
           rules: {
               required: value => !! value || '글을 입력해주세요!',
-          }
+          },
+          init: null
         }
     },
     computed: {
@@ -63,19 +88,21 @@ export default {
       }
     },
     methods: {
-        submitText(){
-            const form = new FormData()
-            form.append('title', this.title)
+        submitContent(){
             this.axios({
-                method: 'post',
-                url : '/list/content/write',
-                data: form,
-            })
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              method: 'post',
+              url : '/list/content/write',
+              data: {'title': this.title, 'content': this.textContent, 'fileAltName': this.$store.state.content.imgPath}
+          })
         },
         submitImg(e){
           const imgForm = new FormData()
           imgForm.append('img',e.target.files[0])
           this.$store.dispatch('content/imgSubmit',imgForm)
+          this.init = true
         },
         onClickImgInput(){
           this.$refs.imgInput.click()
