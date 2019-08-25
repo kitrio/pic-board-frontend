@@ -5,21 +5,29 @@
         <span>Board</span>
         <span class="font-weight-light">Pic</span>
       </v-toolbar-title>
+      <v-app-bar-nav-icon />
       <v-spacer />
-      <v-container v-if='memberInfo === null'>
-        <router-link :to="{name: 'Login'}">
-          <v-btn color="white">
-            로그인
-          </v-btn>
-        </router-link>
-      </v-container>
-      <v-container v-else>
-        <v-btn @click="logOut">
-          로그아웃
+      <router-link
+        v-if="memberInfo === null"
+        :to="{name: 'Login'}"
+      >
+        <v-btn 
+        text>
+          로그인
         </v-btn>
-      </v-container>
+      </router-link>
+      <v-btn
+        v-else
+        @click="logOut"
+        text
+      >
+        로그아웃
+      </v-btn>
       <router-link :to="{name: 'SignUp'}">
-        <v-btn color="blue">
+        <v-btn 
+        color="blue"
+        text
+        >
           회원가입
         </v-btn>
       </router-link>
@@ -60,3 +68,8 @@ export default {
 
 };
 </script>
+<style>
+  a {
+    text-decoration: none;
+  }
+</style>
