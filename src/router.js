@@ -25,7 +25,7 @@ export default new Router({
       component: Contents
     },
     {
-      path: '/content/editor',
+      path: '/editor',
       name: 'Editor',
       component: Editor
     },
