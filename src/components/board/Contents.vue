@@ -10,24 +10,45 @@
         col="12"
         md="8"
         sm="8"
-      > 
+      >
         <v-container>
           <v-card>
-            <v-card-title v-text="title" />
+            <v-card-title v-text="postOne.title" />
+            <v-card-text>{{postOne.nickname}} | {{postOne.writeTime}}</v-card-text>
             <v-img
-              :src="`${imgPath}${fileName}`"
+              :src="`${imgPath}${postOne.fileAltName}`"
               class="white--text align-end"
               max-width="800px"
             />
             <P class="text-content">
-              {{ textContent }}
+              {{ postOne.textContent }}
               <v-card-actions>
                 <v-spacer />
-                <v-btn icon>
+                <v-label>
+                  <v-icon>mdi-eye</v-icon>
+                  {{postOne.readCount}}
+                </v-label>
+
+                <v-btn
+                  @click="goodCounter"
+                >
                   <v-icon>mdi-heart</v-icon>
+                  <v-label>{{postOne.goodCount}}</v-label>                 
                 </v-btn>
                 <v-btn icon>
                   <v-icon>mdi-share-variant</v-icon>
+                </v-btn>
+              </v-card-actions>
+              <v-card-actions v-if="memberInfo">
+                <v-btn
+                  @click="modify"
+                >
+                  <v-label>수정</v-label>                 
+                </v-btn>
+                <v-btn
+                  @click="deleteContent"
+                >
+                  <v-lable>삭제</v-lable>
                 </v-btn>
               </v-card-actions>
             </P>
@@ -48,31 +69,67 @@ export default {
     data() {
       return {
           imgPath: process.env.VUE_APP_FILE_URL,
-          fileName: '',
-          title: '',
-          textContent: ''
+          postOne: []
       }
     },
     created() {
         this.content()
     },
+    computed: {
+      memberInfo() {
+        if(this.$store.state.member.myInfo == null){
+          return false
+        } else{
+          if(this.$store.state.member.myInfo.memberid == this.postOne.memberId){
+            return true
+          }else{
+            return false
+          }
+        }
+      }
+    },
     methods: {
-        content: function() {
+        content() {
+          this.$axios({
+            methods: 'post',
+            headers: {
+              'Accept': 'application/json'
+            },
+            url: `/list/content/${this.$route.params.num}`,
+          })
+          .then(response => {
+              this.postOne = response.data
+              this.writerid = response.data.memberId
+          })
+          .catch(e => console.log('e'))
+        },
+        goodCounter() {
+          this.$axios({
+            methods: 'post',
+            url: `/list/content/${this.$route.params.num}/good`,
+          })
+          .then(response => {
+            this.postOne.goodCount += 1;
+          })
+          .catch(error =>{
+            
+          })
+      },
+      deleteContent() {
         this.$axios({
-          methods: 'post',
-          headers: {
-            'Accept': 'application/json'
-          },
-          url: `/list/content/${this.$route.params.num}`,
+          methods: 'get',
+          url: `/list/content/delete/${this.$route.params.num}`
         })
         .then(response => {
-            this.title = response.data.title
-            this.textContent = response.data.content
-            this.fileName = response.data.fileAltName
+          alert('삭제 되었습니다.')
+          this.$route.push('/')
         })
-        .catch(e => console.log('e'))
-        }
-    }
+        .catch(error => {
+          console.log(error)
+        })
+      }
+    },
+    
 }
 </script>
 <style scoped>
