@@ -106,7 +106,7 @@ export default {
         goodCounter() {
           this.$axios({
             methods: 'post',
-            url: `/list/content/${this.$route.params.num}/good`,
+            url: `/list/content/good${this.$route.params.num}`,
           })
           .then(response => {
             this.postOne.goodCount += 1;
@@ -116,17 +116,20 @@ export default {
           })
       },
       deleteContent() {
-        this.$axios({
-          methods: 'get',
-          url: `/list/content/delete/${this.$route.params.num}`
-        })
-        .then(response => {
-          alert('삭제 되었습니다.')
-          this.$route.push('/')
-        })
-        .catch(error => {
-          console.log(error)
-        })
+        let isDelete = confirm('정말 삭제하겠습니까?')
+        if(isDelete === true){
+          this.$axios({
+            methods: 'get',
+            url: `/list/content/delete/${this.$route.params.num}`
+          })
+          .then(response => {
+            alert('삭제 되었습니다.')
+            this.$route.push('/')
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        }
       }
     },
     
