@@ -20,7 +20,7 @@
               class="white--text align-end"
               max-width="800px"
             />
-            <P class="text-content">
+            <p class="text-content">
               {{ postOne.textContent }}
               <v-card-actions>
                 <v-spacer />
@@ -41,17 +41,17 @@
               </v-card-actions>
               <v-card-actions v-if="memberInfo">
                 <v-btn
-                  @click="modify"
+                  @click="modifyContent"
                 >
-                  <v-label>수정</v-label>                 
+                  <v-label>수정</v-label>               
                 </v-btn>
                 <v-btn
                   @click="deleteContent"
                 >
-                  <v-lable>삭제</v-lable>
+                  <v-label>삭제</v-label>
                 </v-btn>
               </v-card-actions>
-            </P>
+            </p>
           </v-card>
         </v-container>
       </v-col>
@@ -106,7 +106,7 @@ export default {
         goodCounter() {
           this.$axios({
             methods: 'post',
-            url: `/list/content/good${this.$route.params.num}`,
+            url: `/list/content/good/${this.$route.params.num}`,
           })
           .then(response => {
             this.postOne.goodCount += 1;
@@ -116,7 +116,7 @@ export default {
           })
       },
       deleteContent() {
-        let isDelete = confirm('정말 삭제하겠습니까?')
+        const isDelete = confirm('정말 삭제하겠습니까?')
         if(isDelete === true){
           this.$axios({
             methods: 'get',
@@ -124,12 +124,18 @@ export default {
           })
           .then(response => {
             alert('삭제 되었습니다.')
-            this.$route.push('/')
+            this.$router.push('/')
           })
           .catch(error => {
             console.log(error)
           })
         }
+      },
+      modifyContent() {
+        this.$store.dispatch('contents/contentAction', this.postOne)
+        .then(()=>{
+            this.$router.replace({ name: 'Editor'})
+          })
       }
     },
     

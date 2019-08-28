@@ -41,6 +41,9 @@ const actions = {
         .catch(error => {
             console.log(error)
         })
+    },
+    contentAction({ commit }, payload) {
+        commit('setContent', payload)
     }
 }
 
