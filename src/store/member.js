@@ -9,9 +9,9 @@ const getters = {
     }
 
 const mutations = {
-    setMyInfo(state, payload){
+    setMyInfo(state, payload) {
         state.myInfo = payload;
-    },
+    }
 }
 
 const actions = {
@@ -19,12 +19,21 @@ const actions = {
         commit('setMyInfo', payload)
     },
     logOut({ commit }) {
-        axios.post('/logout',{})
+        axios.post('/member/logout')
           .then(() =>{            
-            commit('setMyInfo', null)
         })
         .catch((error) => {
-            console.error(error)
+            commit('setMyInfo', null)  
+        })
+        commit('setMyInfo', null)
+    },
+    nicknameAction({ commit }, payload) {
+        axios.post('/member/info')
+        .then((response) => {
+            alert(response.data + '님 로그인 되었습니다.')
+            Vue.set(this.$store.state.member.myInfo, 'nickname',response.data)
+        }).catch(()=>{
+
         })
     }
 }
