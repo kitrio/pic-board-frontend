@@ -8,6 +8,18 @@
         </router-link>
       </v-toolbar-title>
       <v-spacer />
+      
+      <v-spacer />
+      <router-link
+        v-if="memberInfo !=null"
+        :to="{name: 'Editor'}"
+      >
+        <v-btn
+          mdi-pencli
+        >
+          글쓰기
+        </v-btn>
+      </router-link>
       <router-link
         v-if="memberInfo === null"
         :to="{name: 'Login'}"
@@ -25,10 +37,10 @@
       >
         로그아웃
       </v-btn>
-      <v-label
-        v-if="memberInfo = !null"
-      />
-      <router-link :to="{name: 'SignUp'}">
+      <router-link
+        v-if="memberInfo == null"
+        :to="{name: 'SignUp'}"
+      >
         <v-btn 
           color="blue"
           text
@@ -38,39 +50,19 @@
       </router-link>
     </v-app-bar>
 
-    <v-col
-        col="12"
-        md="2"
-        sm="2"
-      />
-    <v-col
-      col="12"
-      md="8"
-      sm="2"
+    <v-content>
+      <router-view />
+    </v-content>
+    <v-footer
+      fixed
+      class="font-weight-medium"
     >
-      <v-content>
-        <router-view />
-      </v-content>
-    
-    </v-col>
-    <v-col
-        col="12"
-        md="2"
-        sm="2"
-      />
-    
-    <v-row>
-      <v-footer
-        fixed
-        class="font-weight-medium"
+      <v-col
+        cols="12"
       >
-        <v-col
-          cols="12"
-        >
-          {{ new Date().getFullYear() }}
-        </v-col>
-      </v-footer>
-    </v-row>
+        {{ new Date().getFullYear() }}
+      </v-col>
+    </v-footer>
   </v-app>
 </template>
 
@@ -81,8 +73,13 @@ export default {
      
   }),
   computed: {
-    memberInfo() {
-      return this.$store.state.member.myInfo
+    memberInfo: {
+      get(){
+        return this.$store.state.member.myInfo
+      },
+      set(){
+
+      }
     }
   },
   methods: {
