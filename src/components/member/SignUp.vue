@@ -85,18 +85,6 @@ export default {
     },
     methods: {
       onSubmitSignUp() {
-        // const CSRF_TOKEN
-        // if (document.cookie.match(new RegExp(`XSRF-TOKEN=([^;]+)`))[1] == null){
-        //   CSRF_TOKEN = document.cookie.match(new RegExp(`XSRF-TOKEN=([^;]+)`))[1]
-        // }
-        //console.log("CCC" + CSRF_TOKEN)
-        //this.axios.defaults.headers.common['X-CSRF-TOKEN'] = CSRF_TOKEN
-        // let form = new FormData()
-        // form.append('userid', this.userid)
-        // form.append('passwd',this.password)
-        // form.append('userNick',"testnick")
-        // form.append('regdate','20190905')
-        // form.append('X-CSRF-TOKEN',CSRF_TOKEN)
         this.axios({
           method: 'post',
           url: '/member/signup',
@@ -117,6 +105,7 @@ export default {
       reset() {
         this.idField = ''
         this.passwordField = ''
+        this.nicknameField = ''
       }
     },
 }
