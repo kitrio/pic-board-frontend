@@ -11,55 +11,64 @@
         md="8"
         sm="10"
       >
-        <v-card-title>
-          오늘의 사진 하나
-        </v-card-title>        
-        <v-card-text> {{checkModify.nickname }} </v-card-text>
-        <v-img
-          :src=" `${imgPath}`"
-          max-width="720px"
-        />
-        <v-text-field
-          v-model="title"
-          label="제목"
-        />
+        <v-container>  
+          <v-card-title>
+            오늘의 사진 하나
+          </v-card-title>        
+          <v-card-text> {{ checkModify.nickname }} </v-card-text>
+          <v-img
+            :src=" `${imgPath}`"
+            max-width="700px"
+          />
+          <v-text-field
+            v-model="title"
+            label="제목"
+          />
         
-        <v-textarea
-          v-model="textContent"
-          label="이야기"
-        />
-        <v-card-actions>
-        <v-btn v-if="!checkModify"
-          color="white"
-          @click="submitContent"
-        >
-        <v-icon>mdi-plus</v-icon>
-          올리기
-        </v-btn>
-        <v-btn v-else
-          color="orange"
-          @click="submitUpdate"
-        >
-          수정
-        </v-btn>
-        <v-form>
-          <v-btn
-            type="button"
-            color="blue"
-            @click="onClickImgInput"
+          <v-textarea
+            v-model="textContent"
+            label="이야기"
+          /><v-layout
+            row
+            wrap
           >
-            <v-icon>mdi-image</v-icon>
-            사진 +
-            <input
-              ref="imgInput"
-              type="file"
-              hidden
-              accept="image/*"
-              @change="submitImg"
-            >
-          </v-btn>
-        </v-form>
-        </v-card-actions>
+            <p>
+              <v-card-actions>
+                <v-btn
+                  v-if="!checkModify"
+                  color="white"
+                  @click="submitContent"
+                >
+                  <v-icon>mdi-plus</v-icon>
+                  올리기
+                </v-btn>
+                <v-btn
+                  v-else
+                  color="orange"
+                  @click="submitUpdate"
+                >
+                  수정
+                </v-btn>
+                <v-form>
+                  <v-btn
+                    type="button"
+                    color="blue"
+                    @click="onClickImgInput"
+                  >
+                    <v-icon>mdi-image</v-icon>
+                    사진 +
+                    <input
+                      ref="imgInput"
+                      type="file"
+                      hidden
+                      accept="image/*"
+                      @change="submitImg"
+                    >
+                  </v-btn>
+                </v-form>
+              </v-card-actions>
+          </v-layout>
+        </v-container>
       </v-col>
       <v-col
         col="12"
@@ -74,7 +83,7 @@
 export default {
     data(){
         return{
-          boardNum: 0,
+          boardNum: '',
           title: '',
           textContent: '',
           nickname: '',
@@ -109,6 +118,11 @@ export default {
             method: 'post',
             url: '/list/content/write',
             data: {'title': this.title, 'content': this.textContent, 'fileAltName': this.$store.state.contents.imgPath}
+          }).then((response) => {
+            this.$router.push('/service')
+          })
+          .catch((error)=>{
+            alert('게시글 등록이 실패했습니다. 다시 시도해주세요')
           })
         },
         submitImg(e) {
@@ -128,14 +142,18 @@ export default {
         },
         submitUpdate() {
           this.axios({
-            methods: 'post',
-            url: `/list/content/update/${boardNum}`,
-            date: {'boardNum': this.boardNum,'title': this.title, 'content': this.textContent, 'fileAltName':this.fileName}
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            method: 'patch',
+            url: `/list/content/update`,
+            data: {'boardNum': this.boardNum,'title': this.title, 'content': this.textContent, 'fileAltName':this.fileName}
           })
           .then((response) =>{
             this.initDefault()
           })
           .catch((error) =>{
+            alert('게시글 수정이 안되었습니다. 다시 시도해주세요.')
             console.log(error)
           })
         },
