@@ -14,26 +14,26 @@
         <v-container>
           <v-card>
             <v-card-title v-text="postOne.title" />
-            <v-card-text>{{postOne.nickname}} | {{postOne.writeTime}}</v-card-text>
+            <v-card-text>{{ postOne.nickname }} | {{ postOne.writeTime }}</v-card-text>
             <v-img
               :src="`${imgPath}${postOne.fileAltName}`"
               class="white--text align-end"
               max-width="800px"
             />
             <p class="text-content">
-              {{ postOne.textContent }}
+              {{ postOne.content }}
               <v-card-actions>
                 <v-spacer />
                 <v-label>
                   <v-icon>mdi-eye</v-icon>
-                  {{postOne.readCount}}
+                  {{ postOne.readCount }}
                 </v-label>
 
                 <v-btn
                   @click="goodCounter"
                 >
                   <v-icon>mdi-heart</v-icon>
-                  <v-label>{{postOne.goodCount}}</v-label>                 
+                  <v-label>{{ postOne.goodCount }}</v-label>                 
                 </v-btn>
                 <v-btn icon>
                   <v-icon>mdi-share-variant</v-icon>
@@ -72,9 +72,6 @@ export default {
           postOne: []
       }
     },
-    created() {
-        this.content()
-    },
     computed: {
       memberInfo() {
         if(this.$store.state.member.myInfo == null){
@@ -87,6 +84,9 @@ export default {
           }
         }
       }
+    },
+    created() {
+        this.content()
     },
     methods: {
         content() {
@@ -105,7 +105,7 @@ export default {
         },
         goodCounter() {
           this.$axios({
-            methods: 'post',
+            method: 'put',
             url: `/list/content/good/${this.$route.params.num}`,
           })
           .then(response => {
@@ -119,7 +119,7 @@ export default {
         const isDelete = confirm('정말 삭제하겠습니까?')
         if(isDelete === true){
           this.$axios({
-            methods: 'get',
+            method: 'delete',
             url: `/list/content/delete/${this.$route.params.num}`
           })
           .then(response => {
