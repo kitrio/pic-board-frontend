@@ -24,7 +24,6 @@
             v-model="title"
             label="제목"
           />
-        
           <v-textarea
             v-model="textContent"
             label="이야기"
@@ -119,7 +118,7 @@ export default {
             url: '/list/content/write',
             data: {'title': this.title, 'content': this.textContent, 'fileAltName': this.$store.state.contents.imgPath}
           }).then((response) => {
-            this.$router.push('/service')
+            this.$router.push('/')
           })
           .catch((error)=>{
             alert('게시글 등록이 실패했습니다. 다시 시도해주세요')
@@ -151,6 +150,7 @@ export default {
           })
           .then((response) =>{
             this.initDefault()
+            this.$router.push('/service')
           })
           .catch((error) =>{
             alert('게시글 수정이 안되었습니다. 다시 시도해주세요.')
@@ -161,6 +161,15 @@ export default {
           this.$store.state.contents.content = null
         }
     },
+    beforeRouteLeave(to, from, next) {
+    const isLeave = confirm('작성 중인 글이 있습니다. 나가시겠습니까?')
+    if (isLeave) {
+      this.initDefault()
+      next()
+      } else {
+      next(false)
+      }
+    }
 }
 </script>
 
