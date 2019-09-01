@@ -78,7 +78,7 @@ export default {
     mounted: {
       function() {
         this.axios({
-          methods: 'post',
+          method: 'post',
           url: VUE_APP_BASE_URL+'/member/sigunup'
         })
       }
@@ -91,13 +91,13 @@ export default {
           data: {"memberId":this.idField , "password":this.passwordField,"nickname":this.nicknameField}
         })
         .then(res => {
-            if(res.status == 200){
+            if(res.status === 200){
               alert('회원가입 되었습니다.')
               this.$router.push('/')
             }
           }).catch( error =>{
             console.log(error)
-            if(error.response.status == 409){
+            if(error.response.status === 409){
               alert('아이디가 중복되었습니다.')
             }
           })

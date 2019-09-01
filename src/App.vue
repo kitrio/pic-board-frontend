@@ -38,7 +38,7 @@
         로그아웃
       </v-btn>
       <router-link
-        v-if="memberInfo == null"
+        v-if="memberInfo === null"
         :to="{name: 'SignUp'}"
       >
         <v-btn 
