@@ -14,7 +14,12 @@
         <v-container>
           <v-card>
             <v-card-title v-text="postOne.title" />
-            <v-card-text>{{ postOne.nickname }} | {{ postOne.writeTime }}</v-card-text>
+            <v-card-text>
+              <router-link :to="{name:'UserInfo', params:{ nickname: postOne.nickname } }"> 
+                {{ postOne.nickname }}
+              </router-link>
+              | {{ postOne.writeTime }}
+            </v-card-text>
             <v-img
               :src="`${imgPath}${postOne.fileAltName}`"
               class="white--text align-end"

@@ -6,7 +6,7 @@ import Contents from './components/board/Contents'
 import Notfound from './components/NotFound'
 import SignUp from './components/member/SignUp'
 import Login from './components/member/Login'
-
+import UserInfo from './components/member/UserInfo'
 
 Vue.use(Router)
 
@@ -43,6 +43,11 @@ export default new Router({
       path: '/user/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/user/info/:nickname',
+      name: 'UserInfo',
+      component: UserInfo
     }
   ]
 })
