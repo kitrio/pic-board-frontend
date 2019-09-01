@@ -54,7 +54,7 @@ export default {
             password: "",
             showpasswd: false,
             rules: {
-              requiredID: value => !! value || '아이디를 입력 해주세요',  
+              requiredID: value => !! value || '아이디를 입력 해주세요',
               required: value => !! value || '비밀번호를 입력 해주세요',
               min: v => v.length >= 8 || '최소 8자 이상 입력 하세요',
               max: v => v.length <= 15 || '15자리 이하로 입력 해주세요'
@@ -88,7 +88,7 @@ export default {
           })
         }
       },
-    },
+    }
 }
 </script>
 
