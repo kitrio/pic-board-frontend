@@ -27,7 +27,7 @@
             >
               <router-link :to="{ name: 'Contents', params: { num: item.boardNum}}">
                 <v-img
-                  :src="`${imgPath}${item.fileAltName}`"
+                  :src="`${imgPath}`+`${item.fileAltName}`"
                   max-width="400px"
                   aspect-ratio="1.4"
                   class="white--text align-end"
