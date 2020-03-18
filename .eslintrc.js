@@ -7,7 +7,7 @@ module.exports = {
     "ecmaVersion": 6,
     "ecmaFeatures": {
     "experimentalObjectRestSpread": true
-    }    
+    } 
   },
   env: {
     browser: true,
