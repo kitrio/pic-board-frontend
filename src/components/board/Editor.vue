@@ -1,82 +1,64 @@
 <template>
   <v-app id="editor">
-    <v-row>
-      <v-col
-        col="12"
-        md="2"
-        sm="1"
+    <v-container>
+      <v-card-title>
+        오늘의 사진 하나
+      </v-card-title>
+      <v-card-text> {{ checkModify.nickname }} </v-card-text>
+      <v-img
+        :src=" `${imgPath}`"
+        max-width="700px"
       />
-      <v-col
-        col="12"
-        md="8"
-        sm="10"
+      <v-text-field
+        v-model="title"
+        label="제목"
+      />
+      <v-textarea
+        v-model="textContent"
+        label="이야기"
+      /><v-layout
+        row
+        wrap
       >
-        <v-container>
-          <v-card-title>
-            오늘의 사진 하나
-          </v-card-title>
-          <v-card-text> {{ checkModify.nickname }} </v-card-text>
-          <v-img
-            :src=" `${imgPath}`"
-            max-width="700px"
-          />
-          <v-text-field
-            v-model="title"
-            label="제목"
-          />
-          <v-textarea
-            v-model="textContent"
-            label="이야기"
-          /><v-layout
-            row
-            wrap
-          >
-            <p>
-              <v-card-actions>
-                <v-btn
-                  v-if="!checkModify"
-                  color="white"
-                  @click="submitContent"
+        <p>
+          <v-card-actions>
+            <v-btn
+              v-if="!checkModify"
+              color="white"
+              @click="submitContent"
+            >
+              <v-icon>mdi-plus</v-icon>
+              올리기
+            </v-btn>
+            <v-btn
+              v-else
+              color="orange"
+              @click="submitUpdate"
+            >
+              수정
+            </v-btn>
+            <v-form>
+              <v-btn
+                type="button"
+                color="blue"
+                @click="onClickImgInput"
+              >
+                <v-icon>mdi-image</v-icon>
+                사진 +
+                <input
+                  ref="imgInput"
+                  type="file"
+                  hidden
+                  accept="image/*"
+                  @change="submitImg"
                 >
-                  <v-icon>mdi-plus</v-icon>
-                  올리기
-                </v-btn>
-                <v-btn
-                  v-else
-                  color="orange"
-                  @click="submitUpdate"
-                >
-                  수정
-                </v-btn>
-                <v-form>
-                  <v-btn
-                    type="button"
-                    color="blue"
-                    @click="onClickImgInput"
-                  >
-                    <v-icon>mdi-image</v-icon>
-                    사진 +
-                    <input
-                      ref="imgInput"
-                      type="file"
-                      hidden
-                      accept="image/*"
-                      @change="submitImg"
-                    >
-                  </v-btn>
-                </v-form>
-              </v-card-actions>
-            </p>
-          </v-layout>
-          <p />
-        </v-container>
-      </v-col>
-      <v-col
-        col="12"
-        md="2"
-        sm="1"
-      />
-    </v-row>
+              </v-btn>
+            </v-form>
+          </v-card-actions>
+        </p>
+      </v-layout>
+      <p />
+    </v-container>
   </v-app>
 </template>
 

@@ -12,14 +12,14 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',
-  base: '/',
+  base: '/service',
   routes: [
     {
       path: '/',
       name: 'BoardList',
       component: BoardList
     },
-    { 
+    {
       path: '/content/:num',
       name: 'Contents',
       component: Contents

@@ -1,48 +1,30 @@
 <template>
   <v-app id="Login">
-    <v-row>
-      <v-col
-        col="12"
-        md="2"
-        sm="1"
+    <v-form
+      ref="form"
+      method="post"
+    >
+      <v-text-field
+        v-model="userid"
+        label="ID"
+        :rules="[rules.requiredID,rules.max]"
+        counter
       />
-      <v-col
-        col="12"
-        md="8"
-        sm="10"
+      <v-text-field
+        v-model="password"
+        :rules="[rules.required, rules.min]"
+        :append-icon="showpasswd ? 'mdi-eye' : 'mdi-eye-off'"
+        :type="showpasswd ? 'text' : 'password'"
+        label="비밀번호"
+        counter
+        @click:append="showpasswd = !showpasswd"
+      />
+      <v-btn
+        @click="login"
       >
-        <v-form
-          ref="form"
-          method="post"
-        >
-          <v-text-field
-            v-model="userid"
-            label="ID"
-            :rules="[rules.requiredID,rules.max]"
-            counter
-          />
-          <v-text-field
-            v-model="password"
-            :rules="[rules.required, rules.min]"
-            :append-icon="showpasswd ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="showpasswd ? 'text' : 'password'"
-            label="비밀번호"
-            counter
-            @click:append="showpasswd = !showpasswd"
-          />
-          <v-btn
-            @click="login"
-          >
-            로그인
-          </v-btn>
-        </v-form>
-      </v-col>
-      <v-col
-        col="12"
-        md="2"
-        sm="1"
-      />
-    </v-row>
+        로그인
+      </v-btn>
+    </v-form>
   </v-app>
 </template>
 

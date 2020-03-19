@@ -8,7 +8,7 @@
         </router-link>
       </v-toolbar-title>
       <v-spacer />
-      
+
       <v-spacer />
       <router-link
         v-if="memberInfo !=null"
@@ -24,7 +24,7 @@
         v-if="memberInfo === null"
         :to="{name: 'Login'}"
       >
-        <v-btn 
+        <v-btn
           text
         >
           로그인
@@ -41,7 +41,7 @@
         v-if="memberInfo === null"
         :to="{name: 'SignUp'}"
       >
-        <v-btn 
+        <v-btn
           color="blue"
           text
         >
@@ -49,9 +49,26 @@
         </v-btn>
       </router-link>
     </v-app-bar>
-
     <v-content>
-      <router-view />
+      <v-row>
+        <v-col
+          col="12"
+          md="2"
+          sm="1"
+        />
+        <v-col
+          col="12"
+          md="8"
+          sm="10"
+        >
+          <router-view />
+        </v-col>
+        <v-col
+          col="12"
+          md="2"
+          sm="1"
+        />
+      </v-row>
     </v-content>
     <v-footer
       fixed
@@ -68,27 +85,27 @@
 
 <script>
 export default {
-  name: "App",
+  name: 'App',
   data: () => ({
-     
+
   }),
   computed: {
     memberInfo: {
-      get(){
+      get () {
         return this.$store.state.member.myInfo
       },
-      set(){
+      set () {
 
       }
     }
   },
   methods: {
-    logOut(){
-      this.$store.dispatch('member/logOut',null)
+    logOut () {
+      this.$store.dispatch('member/logOut', null)
     }
   }
 
-};
+}
 </script>
 <style>
   a {

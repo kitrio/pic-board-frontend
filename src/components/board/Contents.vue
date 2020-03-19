@@ -1,71 +1,53 @@
 <template>
   <v-app id="contents">
-    <v-row>
-      <v-col
-        col="12"
-        md="2"
-        sm="2"
-      />
-      <v-col
-        col="12"
-        md="8"
-        sm="8"
-      >
-        <v-container>
-          <v-card>
-            <v-card-title v-text="postOne.title" />
-            <v-card-text>
-              <router-link :to="{name:'UserInfo', params:{ nickname: postOne.nickname } }">
-                {{ postOne.nickname }}
-              </router-link>
-              | {{ postOne.writeTime }}
-            </v-card-text>
-            <v-img
-              :src="`${imgPath}`+`${postOne.fileAltName}`"
-              class="white--text align-end"
-              max-width="800px"
-            />
-            <p class="text-content">
-              {{ postOne.content }}
-              <v-card-actions>
-                <v-spacer />
-                <v-label>
-                  <v-icon>mdi-eye</v-icon>
-                  {{ postOne.readCount }}
-                </v-label>
+    <v-container>
+      <v-card>
+        <v-card-title v-text="postOne.title" />
+        <v-card-text>
+          <router-link :to="{name:'UserInfo', params:{ nickname: postOne.nickname } }">
+            {{ postOne.nickname }}
+          </router-link>
+          | {{ postOne.writeTime }}
+        </v-card-text>
+        <v-img
+          :src="`${imgPath}`+`${postOne.fileAltName}`"
+          class="white--text align-end"
+          max-width="800px"
+        />
+        <p class="text-content">
+          {{ postOne.content }}
+          <v-card-actions>
+            <v-spacer />
+            <v-label>
+              <v-icon>mdi-eye</v-icon>
+              {{ postOne.readCount }}
+            </v-label>
 
-                <v-btn
-                  @click="goodCounter"
-                >
-                  <v-icon>mdi-heart</v-icon>
-                  <v-label>{{ postOne.goodCount }}</v-label>
-                </v-btn>
-                <v-btn icon>
-                  <v-icon>mdi-share-variant</v-icon>
-                </v-btn>
-              </v-card-actions>
-              <v-card-actions v-if="memberInfo">
-                <v-btn
-                  @click="modifyContent"
-                >
-                  <v-label>수정</v-label>
-                </v-btn>
-                <v-btn
-                  @click="deleteContent"
-                >
-                  <v-label>삭제</v-label>
-                </v-btn>
-              </v-card-actions>
-            </p>
-          </v-card>
-        </v-container>
-      </v-col>
-      <v-col
-        col="12"
-        md="2"
-        sm="2"
-      />
-    </v-row>
+            <v-btn
+              @click="goodCounter"
+            >
+              <v-icon>mdi-heart</v-icon>
+              <v-label>{{ postOne.goodCount }}</v-label>
+            </v-btn>
+            <v-btn icon>
+              <v-icon>mdi-share-variant</v-icon>
+            </v-btn>
+          </v-card-actions>
+          <v-card-actions v-if="memberInfo">
+            <v-btn
+              @click="modifyContent"
+            >
+              <v-label>수정</v-label>
+            </v-btn>
+            <v-btn
+              @click="deleteContent"
+            >
+              <v-label>삭제</v-label>
+            </v-btn>
+          </v-card-actions>
+        </p>
+      </v-card>
+    </v-container>
   </v-app>
 </template>
 <script>
