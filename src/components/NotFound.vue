@@ -9,9 +9,9 @@
 <script>
 export default {
   name: 'Notfound',
-  mounted() {
+  mounted () {
     this.errorfunc()
-  }, // 컴포넌트 이름
+  },
   methods: {
     errorfunc: () => {
       document.title = '404 Error'

@@ -16,7 +16,8 @@ module.exports = {
   },
   globals: {
     VUE_APP_BASE_URL: false,
-    axios: false
+    axios: false,
+    'space-before-function-paren': false
   },
   overrides: [
     {

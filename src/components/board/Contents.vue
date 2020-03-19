@@ -15,13 +15,13 @@
           <v-card>
             <v-card-title v-text="postOne.title" />
             <v-card-text>
-              <router-link :to="{name:'UserInfo', params:{ nickname: postOne.nickname } }"> 
+              <router-link :to="{name:'UserInfo', params:{ nickname: postOne.nickname } }">
                 {{ postOne.nickname }}
               </router-link>
               | {{ postOne.writeTime }}
             </v-card-text>
             <v-img
-              :src="`${imgPath}`+`${postOne.fileAltName}`"           
+              :src="`${imgPath}`+`${postOne.fileAltName}`"
               class="white--text align-end"
               max-width="800px"
             />
@@ -38,7 +38,7 @@
                   @click="goodCounter"
                 >
                   <v-icon>mdi-heart</v-icon>
-                  <v-label>{{ postOne.goodCount }}</v-label>                 
+                  <v-label>{{ postOne.goodCount }}</v-label>
                 </v-btn>
                 <v-btn icon>
                   <v-icon>mdi-share-variant</v-icon>
@@ -48,7 +48,7 @@
                 <v-btn
                   @click="modifyContent"
                 >
-                  <v-label>수정</v-label>               
+                  <v-label>수정</v-label>
                 </v-btn>
                 <v-btn
                   @click="deleteContent"
@@ -70,63 +70,63 @@
 </template>
 <script>
 export default {
-    name: 'Contents',
-    data() {
-      return {
-          imgPath: process.env.VUE_APP_FILE_URL,
-          postOne: []
-      }
-    },
-    computed: {
-      memberInfo() {
-        if(this.$store.state.member.myInfo == null){
+  name: 'Contents',
+  data () {
+    return {
+      imgPath: process.env.VUE_APP_FILE_URL,
+      postOne: []
+    }
+  },
+  computed: {
+    memberInfo () {
+      if (this.$store.state.member.myInfo == null) {
+        return false
+      } else {
+        if (this.$store.state.member.myInfo.memberid === this.postOne.memberId) {
+          return true
+        } else {
           return false
-        } else{
-          if(this.$store.state.member.myInfo.memberid == this.postOne.memberId){
-            return true
-          }else{
-            return false
-          }
         }
       }
-    },
-    created() {
-        this.content()
-    },
-    methods: {
-        content() {
-          this.$axios({
-            methods: 'post',
-            headers: {
-              'Accept': 'application/json'
-            },
-            url: `/list/content/${this.$route.params.num}`,
-          })
-          .then(response => {
-              this.postOne = response.data
-              this.writerid = response.data.memberId
-          })
-          .catch(e => console.log('e'))
+    }
+  },
+  created () {
+    this.content()
+  },
+  methods: {
+    content () {
+      this.$axios({
+        methods: 'post',
+        headers: {
+          Accept: 'application/json'
         },
-        goodCounter() {
-          this.$axios({
-            method: 'put',
-            url: `/list/content/good/${this.$route.params.num}`,
-          })
-          .then(response => {
-            this.postOne.goodCount += 1;
-          })
-          .catch(error =>{
-            
-          })
-      },
-      deleteContent() {
-        const isDelete = confirm('정말 삭제하겠습니까?')
-        if(isDelete === true){
-          this.$axios({
-            method: 'delete',
-            url: `/list/content/delete/${this.$route.params.num}`
-          })
+        url: `/list/content/${this.$route.params.num}`
+      })
+        .then(response => {
+          this.postOne = response.data
+          this.writerid = response.data.memberId
+        })
+        .catch(e => console.log('e'))
+    },
+    goodCounter () {
+      this.$axios({
+        method: 'put',
+        url: `/list/content/good/${this.$route.params.num}`
+      })
+        .then(response => {
+          this.postOne.goodCount += 1
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    deleteContent () {
+      const isDelete = confirm('정말 삭제하겠습니까?')
+      if (isDelete === true) {
+        this.$axios({
+          method: 'delete',
+          url: `/list/content/delete/${this.$route.params.num}`
+        })
           .then(response => {
             alert('삭제 되었습니다.')
             this.$router.push('/')
@@ -134,16 +134,16 @@ export default {
           .catch(error => {
             console.log(error)
           })
-        }
-      },
-      modifyContent() {
-        this.$store.dispatch('contents/contentAction', this.postOne)
-        .then(()=>{
-            this.$router.replace({ name: 'Editor'})
-          })
       }
     },
-    
+    modifyContent () {
+      this.$store.dispatch('contents/contentAction', this.postOne)
+        .then(() => {
+          this.$router.replace({ name: 'Editor' })
+        })
+    }
+  }
+
 }
 </script>
 <style scoped>

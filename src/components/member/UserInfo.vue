@@ -32,7 +32,7 @@
                   max-width="400px"
                   aspect-ratio="1.4"
                   class="white--text align-end"
-                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"              
+                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"
                 >
                   <v-card-text>{{ item.title }}</v-card-text>
                 </v-img>
@@ -47,33 +47,33 @@
 
 <script>
 export default {
-  name: "UserInfo",
-  data() {
+  name: 'UserInfo',
+  data () {
     return {
       index: 5,
       posts: [],
-      imgPath: process.env.VUE_APP_FILE_URL+'thumb_'
-    };
+      imgPath: process.env.VUE_APP_FILE_URL + 'thumb_'
+    }
   },
-  mounted() {
-    this.listBoard();
+  mounted () {
+    this.listBoard()
   },
   methods: {
-    listBoard: function() {
+    listBoard: function () {
       this.$axios({
         method: 'post',
-          headers: {
-            Accept: 'application/json'
-          },
+        headers: {
+          Accept: 'application/json'
+        },
         url: `/member/info/${this.$route.params.nickname}`
-        })
+      })
         .then(response => {
-          this.posts = response.data;
+          this.posts = response.data
         })
-        .catch(e => console.log(e));
+        .catch(e => console.log(e))
     }
   }
-};
+}
 </script>
 
 <style>
