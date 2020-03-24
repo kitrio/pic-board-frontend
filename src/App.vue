@@ -12,6 +12,7 @@
         id="searchBox"
         v-model="keywords"
         placeholder="제목검색, @닉네임"
+        @keydown.enter="search"
       >
       <v-btn
         @click="search"
@@ -76,7 +77,9 @@
       fixed
       class="font-weight-medium"
     >
-      {{ new Date().getFullYear() }}
+      <div id="footerbox">
+        ©{{ new Date().getFullYear() }}
+      </div>
     </v-footer>
   </v-app>
 </template>
@@ -120,6 +123,9 @@ export default {
   v-footer {
     font: font-weight-medium
   }
+  #footerbox {
+    margin: 0 auto;
+  }
   #searchBox {
     background-color: #eeeeee;
     border: #aaaaaa 1px solid;
@@ -128,5 +134,4 @@ export default {
     min-width: 30%;
     padding:5px;
   }
-
 </style>
