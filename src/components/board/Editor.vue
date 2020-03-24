@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     submitContent () {
-      this.axios({
+      this.$axios({
         headers: {
           'Content-Type': 'application/json'
         },
@@ -126,7 +126,7 @@ export default {
       this.$store.state.contents.imgPath = this.checkModify.fileAltName
     },
     submitUpdate () {
-      this.axios({
+      this.$axios({
         headers: {
           'Content-Type': 'application/json'
         },

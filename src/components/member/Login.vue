@@ -49,7 +49,7 @@ export default {
         const form = new FormData()
         form.append('memberid', this.userid)
         form.append('password', this.password)
-        this.axios({
+        this.$axios({
           method: 'post',
           url: '/authlogin',
           data: form

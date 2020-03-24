@@ -3,7 +3,6 @@
     <v-card-title>{{ this.$route.params.nickname }}님의 사진</v-card-title>
     <v-card-subtitle>게시물 개수{{ Object.keys(posts).length }}</v-card-subtitle>
     <v-container
-      fluid
       grid-list-md
     >
       <v-layout

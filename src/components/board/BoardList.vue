@@ -1,8 +1,7 @@
 <template>
   <v-app id="board-list">
-    <v-card-title>이번주 추천</v-card-title>
+    <v-card-title>이번주 Top 20</v-card-title>
     <v-container
-      fluid
       grid-list-md
     >
       <v-layout
@@ -16,7 +15,7 @@
           sm6
           md4
           lg2
-          x2
+          x3
         >
           <v-hover
             v-slot:default="{ hover }"
@@ -28,7 +27,7 @@
               <router-link :to="{ name: 'Contents', params: { num: item.boardNum}}">
                 <v-img
                   :src="`${imgPath}`+`${item.fileAltName}`"
-                  max-width="400px"
+                  max-width="500px"
                   aspect-ratio="1.4"
                   class="white--text align-end"
                   gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"
@@ -58,7 +57,7 @@ export default {
     this.listBoard()
   },
   methods: {
-    listBoard: function () {
+    listBoard () {
       this.$axios({
         methods: 'post',
         headers: {

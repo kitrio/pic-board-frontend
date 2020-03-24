@@ -9,5 +9,9 @@ export default new Vuex.Store({
     member,
     contents
   },
-  plugins: [createPersistedState()]
+  plugins: [
+    createPersistedState({
+      paths: ['member']
+    })
+  ]
 })

@@ -57,7 +57,7 @@ export default {
   },
   mounted: {
     function () {
-      this.axios({
+      this.$axios({
         method: 'post',
         url: VUE_APP_BASE_URL + '/member/sigunup'
       })
@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     onSubmitSignUp () {
-      this.axios({
+      this.$axios({
         method: 'post',
         url: '/member/signup',
         data: { memberId: this.idField, password: this.passwordField, nickname: this.nicknameField }
