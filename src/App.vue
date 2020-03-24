@@ -8,6 +8,16 @@
         </router-link>
       </v-toolbar-title>
       <v-spacer />
+      <input
+        id="searchBox"
+        v-model="keywords"
+        placeholder="제목검색, @닉네임"
+      >
+      <v-btn
+        @click="search"
+      >
+        검색
+      </v-btn>
 
       <v-spacer />
       <router-link
@@ -50,35 +60,23 @@
       </router-link>
     </v-app-bar>
     <v-content>
-      <v-row>
-        <v-col
-          col="12"
-          md="2"
-          sm="1"
-        />
-        <v-col
-          col="12"
-          md="8"
-          sm="10"
-        >
-          <router-view />
-        </v-col>
-        <v-col
-          col="12"
-          md="2"
-          sm="1"
-        />
-      </v-row>
+      <router-view
+        :key="$route.fullPath"
+        col="12"
+        lg="8"
+        md="8"
+        sm="10"
+        xs="12"
+      />
     </v-content>
+    <p>
+      <br>
+    </p>
     <v-footer
       fixed
       class="font-weight-medium"
     >
-      <v-col
-        cols="12"
-      >
-        {{ new Date().getFullYear() }}
-      </v-col>
+      {{ new Date().getFullYear() }}
     </v-footer>
   </v-app>
 </template>
@@ -86,9 +84,11 @@
 <script>
 export default {
   name: 'App',
-  data: () => ({
-
-  }),
+  data: () => {
+    return {
+      keywords: ''
+    }
+  },
   computed: {
     memberInfo: {
       get () {
@@ -102,6 +102,9 @@ export default {
   methods: {
     logOut () {
       this.$store.dispatch('member/logOut', null)
+    },
+    search () {
+      this.$router.push({ name: 'SearchList', params: { keyword: this.keywords } })
     }
   }
 
@@ -111,4 +114,19 @@ export default {
   a {
     text-decoration: none;
   }
+  v-content {
+    width: 100%;
+  }
+  v-footer {
+    font: font-weight-medium
+  }
+  #searchBox {
+    background-color: #eeeeee;
+    border: #aaaaaa 1px solid;
+    border-radius: 15px;
+    margin: 10px;
+    min-width: 30%;
+    padding:5px;
+  }
+
 </style>
