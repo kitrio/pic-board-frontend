@@ -6,7 +6,8 @@
       </v-card-title>
       <v-card-text> {{ checkModify.nickname }} </v-card-text>
       <v-img
-        :src=" `${imgPath}`"
+        v-if="isImgPreview"
+        :src="`${imgPather}`"
         max-width="700px"
       />
       <v-text-field
@@ -74,12 +75,12 @@ export default {
       rules: {
         required: value => !!value || '글을 입력해주세요!'
       },
-      init: null,
+      isImgPreview: false,
       isSubmitSucees: false
     }
   },
   computed: {
-    imgPath: function () {
+    imgPather: function () {
       return process.env.VUE_APP_FILE_URL + this.$store.state.contents.imgPath
     },
     checkModify () {
@@ -117,6 +118,7 @@ export default {
     },
     onClickImgInput () {
       this.$refs.imgInput.click()
+      this.isImgPreview = true
     },
     getModifyContent () {
       this.boardNum = this.checkModify.boardNum
@@ -124,6 +126,7 @@ export default {
       this.nickname = this.checkModify.nickname
       this.textContent = this.checkModify.content
       this.$store.state.contents.imgPath = this.checkModify.fileAltName
+      this.fileName = this.checkModify.fileAltName
     },
     submitUpdate () {
       this.$axios({
@@ -146,7 +149,6 @@ export default {
     },
     initDefault () {
       this.$store.state.contents.content = null
-      this.$store.state.contents.imgPath = null
     }
   },
   beforeRouteLeave (to, from, next) {
