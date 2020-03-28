@@ -10,7 +10,7 @@
           | {{ postOne.writeTime }}
         </v-card-text>
         <v-img
-          :src="`${imgPath}`+`${postOne.fileAltName}`"
+          :src="`${imgPath}${postOne.fileAltName}`"
           class="white--text align-end"
           max-width="800px"
         />
@@ -72,7 +72,7 @@ export default {
       }
     }
   },
-  created () {
+  beforeMount () {
     this.content()
   },
   methods: {
