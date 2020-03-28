@@ -1,72 +1,54 @@
 <template>
   <v-app id="board-list">
     <v-card-title>이번주 Top 20</v-card-title>
-    <v-container
-      grid-list-md
-    >
-      <v-layout
-        row
-        wrap
-      >
-        <v-flex
-          v-for="(item, index) in posts"
-          :key="index"
-          xs12
-          sm6
-          md4
-          lg2
-          x3
-        >
-          <v-hover
-            v-slot:default="{ hover }"
-            open-delay="180"
-          >
-            <v-card
-              :elevation="hover ? 12 : 2"
-            >
-              <router-link :to="{ name: 'Contents', params: { num: item.boardNum}}">
-                <v-img
-                  :src="`${imgPath}`+`${item.fileAltName}`"
-                  max-width="500px"
-                  aspect-ratio="1.4"
-                  class="white--text align-end"
-                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.3)"
-                >
-                  <v-card-text>{{ item.title }}</v-card-text>
-                </v-img>
-              </router-link>
-            </v-card>
-          </v-hover>
-        </v-flex>
-      </v-layout>
-    </v-container>
+    <post-list :post-props="bestPosts" />
+    <v-card-title>메인</v-card-title>
+    <post-list :post-props="mainPosts" />
   </v-app>
 </template>
 
 <script>
+import PostList from './PostList.vue'
 export default {
   name: 'BoardList',
+  components: {
+    PostList
+  },
   data () {
     return {
-      index: 5,
-      posts: [],
+      bestPosts: [],
+      mainPosts: [],
       imgPath: process.env.VUE_APP_FILE_URL + 'thumb_'
     }
   },
   mounted () {
-    this.listBoard()
+    this.loadwekklyBestContent()
+    this.loadContent()
   },
   methods: {
-    listBoard () {
+    loadwekklyBestContent () {
       this.$axios({
-        methods: 'post',
+        methods: 'get',
         headers: {
           Accept: 'application/json'
         },
         url: `/list/best?date=${this.moment(new Date()).format('YYYY-MM-DD')}`
       })
         .then(response => {
-          this.posts = response.data
+          this.bestPosts = response.data
+        })
+        .catch(e => console.log(e))
+    },
+    loadContent () {
+      this.$axios({
+        methods: 'get',
+        headers: {
+          Accept: 'application/json'
+        },
+        url: '/list/contents?firstpage=1&lastpage=10'
+      })
+        .then(response => {
+          this.mainPosts = response.data
         })
         .catch(e => console.log(e))
     }
