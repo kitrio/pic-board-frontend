@@ -61,14 +61,24 @@
       </router-link>
     </v-app-bar>
     <v-content>
-      <router-view
-        :key="$route.fullPath"
-        col="12"
-        lg="8"
-        md="8"
-        sm="10"
-        xs="12"
-      />
+      <v-container>
+        <v-row
+          align="center"
+          justify="center"
+        >
+          <v-col
+            cols="12"
+            lg="8"
+            md="10"
+            sm="10"
+            xs="12"
+          >
+            <router-view
+              :key="$route.fullPath"
+            />
+          </v-col>
+        </v-row>
+      </v-container>
     </v-content>
     <p>
       <br>

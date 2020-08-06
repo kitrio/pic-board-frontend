@@ -45,7 +45,7 @@ export default {
         headers: {
           Accept: 'application/json'
         },
-        url: '/list/contents?firstpage=1&lastpage=10'
+        url: '/list/contents?firstpage=0&lastpage=10'
       })
         .then(response => {
           this.mainPosts = response.data
