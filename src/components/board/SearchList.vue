@@ -8,8 +8,8 @@
         wrap
       >
         <v-flex
-          v-for="(item, index) in posts"
-          :key="index"
+          v-for="(item, idx) in posts"
+          :key="idx"
           xs12
           sm6
           md4

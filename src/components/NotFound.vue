@@ -1,6 +1,6 @@
 <template>
   <div id="notfound">
-    <H1>404</H1>
+    <h1>404</h1>
     <p>page not found</p>
     페이지를 찾을 수 없습니다.
   </div>
