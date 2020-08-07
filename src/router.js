@@ -5,14 +5,15 @@ import BoardList from '@/components/board/BoardList'
 import Contents from '@/components/board/Contents'
 import Editor from '@/components/board/Editor'
 import SearchList from '@/components/board/SearchList'
-
 import Notfound from '@/components/NotFound'
 import SignUp from '@/components/member/SignUp'
 import Login from '@/components/member/Login'
 import UserInfo from '@/components/member/UserInfo'
-Vue.use(Router)
 
-export default new Router({
+Vue.use(Router)
+import store from './store/index'
+
+const router = new Router({
   mode: 'history',
   base: '/service',
   routes: [
@@ -29,7 +30,8 @@ export default new Router({
     {
       path: '/editor',
       name: 'Editor',
-      component: Editor
+      component: Editor,
+      meta: { authRequired: true }
     },
     {
       path: '*',
@@ -58,3 +60,22 @@ export default new Router({
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.authRequired)) {
+    redirectLogin(to, from, next)
+  } else {
+    next()
+  }
+})
+
+const redirectLogin = (to, from, next) => {
+  if(store.getters['member/getMemberId'] === null){
+    alert('로그인이 필요합니다.')
+    next('/user/login')
+  } else {
+    next()
+  }
+  
+}
+
+export default router

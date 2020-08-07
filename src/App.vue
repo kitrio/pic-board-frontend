@@ -112,6 +112,7 @@ export default {
   methods: {
     logout () {
       this.$store.dispatch('member/logout', null)
+      this.$router.push({ name: 'BoardList'})
     },
     search () {
       this.$router.push({ name: 'SearchList', params: { keyword: this.keywords } })
