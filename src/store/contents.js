@@ -4,10 +4,10 @@ const state = {
 }
 
 const getters = {
-  getContent: function (state) {
+  getContent (state) {
     return state.content
   },
-  getImg: function (state) {
+  getImgPath (state) {
     return state.imgPath
   }
 }
@@ -41,6 +41,9 @@ const actions = {
       .catch(error => {
         console.log(error)
       })
+  },
+  modifyImg ({ commit }, payload) {
+    commit('setImg', payload)
   },
   contentAction ({ commit }, payload) {
     commit('setContent', payload)

@@ -36,7 +36,7 @@
               color="orange"
               @click="submitUpdate"
             >
-              수정
+              수정완료
             </v-btn>
             <v-form>
               <v-btn
@@ -64,6 +64,8 @@
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
@@ -71,24 +73,24 @@ export default {
       title: '',
       textContent: '',
       nickname: '',
-      fileName: this.$store.state.contents.imgPath,
+      fileName: this.imgPath,
       rules: {
         required: value => !!value || '글을 입력해주세요!'
       },
-      isImgPreview: false,
+      isImgPreview: true,
       isSubmitSucees: false
     }
   },
   computed: {
-    imgPather: function () {
-      return process.env.VUE_APP_FILE_URL + this.$store.state.contents.imgPath
+    ...mapGetters({
+      contents: (['contents/getContent']),
+      imgPath: (['contents/getImgPath'])
+    }),
+    imgPather () {
+      return process.env.VUE_APP_FILE_URL + this.imgPath
     },
     checkModify () {
-      if (this.$store.state.contents.content) {
-        return this.$store.state.contents.content
-      } else {
-        return false
-      }
+      return (this.contents != null) ? this.contents : false
     }
   },
   mounted () {
@@ -102,7 +104,7 @@ export default {
         },
         method: 'post',
         url: '/list/content/write',
-        data: { title: this.title, content: this.textContent, fileAltName: this.$store.state.contents.imgPath }
+        data: { title: this.title, content: this.textContent, fileAltName: this.imgPath }
       }).then((response) => {
         this.isSubmitSucees = true
         this.$router.push('/')
@@ -125,8 +127,8 @@ export default {
       this.title = this.checkModify.title
       this.nickname = this.checkModify.nickname
       this.textContent = this.checkModify.content
-      this.$store.state.contents.imgPath = this.checkModify.fileAltName
       this.fileName = this.checkModify.fileAltName
+      this.$store.dispatch('contents/modifyImg', this.checkModify.fileAltName)
     },
     submitUpdate () {
       this.$axios({
@@ -148,7 +150,7 @@ export default {
         })
     },
     initDefault () {
-      this.$store.state.contents.content = null
+      this.$store.dispatch('contents/content', null)
     }
   },
   beforeRouteLeave (to, from, next) {

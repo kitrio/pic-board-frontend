@@ -1,4 +1,3 @@
-import axios from 'axios'
 const state = {
   memberId: null,
   nickname: null
@@ -27,12 +26,13 @@ const actions = {
     commit('setMemberId', payload)
   },
   logout ({ commit }) {
-    axios.post('/member/logOut')
+    axios.post('/member/logout')
       .then(() => {
         commit('setMemberId', null)
+        commit('setNickname', null)
       })
       .catch(() => {
-        commit('setNickname', null)
+
       })
   },
   nicknameAction ({ commit }) {

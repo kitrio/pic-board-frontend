@@ -44,7 +44,7 @@
       <v-btn
         v-else
         text
-        @click="logOut"
+        @click="logout"
       >
         로그아웃
       </v-btn>
@@ -95,6 +95,8 @@
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex'
 export default {
   name: 'App',
   data: () => {
@@ -103,18 +105,13 @@ export default {
     }
   },
   computed: {
-    memberInfo: {
-      get () {
-        return this.$store.state.member.myInfo
-      },
-      set () {
-
-      }
-    }
+    ...mapGetters({
+      memberInfo: (['member/getMemberId'])
+    })
   },
   methods: {
-    logOut () {
-      this.$store.dispatch('member/logOut', null)
+    logout () {
+      this.$store.dispatch('member/logout', null)
     },
     search () {
       this.$router.push({ name: 'SearchList', params: { keyword: this.keywords } })
