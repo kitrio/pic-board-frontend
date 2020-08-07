@@ -8,6 +8,7 @@
         v-model="userid"
         label="ID"
         :rules="[rules.requiredID,rules.max]"
+        autocomplete="username"
         counter
       />
       <v-text-field
@@ -16,6 +17,7 @@
         :append-icon="showpasswd ? 'mdi-eye' : 'mdi-eye-off'"
         :type="showpasswd ? 'text' : 'password'"
         label="비밀번호"
+        autocomplete="current-password"
         counter
         @click:append="showpasswd = !showpasswd"
       />
@@ -30,6 +32,7 @@
 
 <script>
 export default {
+  name: 'Login',
   data () {
     return {
       userid: '',
@@ -56,9 +59,7 @@ export default {
         })
           .then(response => {
             if (response.status === 200) {
-              this.$store.dispatch('member/logIn', {
-                memberid: this.userid
-              })
+              this.$store.dispatch('member/logIn', this.userid)
               this.$router.push('/')
               this.$store.dispatch('member/nicknameAction')
             }

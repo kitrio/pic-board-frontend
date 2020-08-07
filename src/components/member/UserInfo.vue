@@ -10,8 +10,8 @@
         wrap
       >
         <v-flex
-          v-for="(item, index) in posts"
-          :key="index"
+          v-for="(item, idx) in posts"
+          :key="idx"
           xs12
           sm6
           md4
@@ -49,7 +49,6 @@ export default {
   name: 'UserInfo',
   data () {
     return {
-      index: 5,
       posts: [],
       imgPath: process.env.VUE_APP_FILE_URL + 'thumb_'
     }
@@ -58,9 +57,9 @@ export default {
     this.listBoard()
   },
   methods: {
-    listBoard: function () {
+    listBoard () {
       this.$axios({
-        method: 'post',
+        method: 'get',
         headers: {
           Accept: 'application/json'
         },

@@ -4,8 +4,10 @@
     <v-form>
       <v-text-field
         v-model="idField"
+        :rules="[rules.max]"
         autofocus
         label="id"
+        counter
         required
       />
       <v-text-field
@@ -20,6 +22,8 @@
       <v-text-field
         v-model="nicknameField"
         label="닉네임"
+        :rules="[rules.max]"
+        counter
         required
       />
       <v-btn
@@ -51,16 +55,9 @@ export default {
       nicknameField: '',
       rules: {
         required: value => !!value || '비밀번호를 입력해주세요',
-        min: v => v.length >= 8 || '최소 8자 이상 입력하세요'
+        min: v => v.length >= 8 || '최소 8자 이상 입력하세요',
+        max: v => v.length <= 12 || '최대 12자리 입니다.'
       }
-    }
-  },
-  mounted: {
-    function () {
-      this.$axios({
-        method: 'post',
-        url: VUE_APP_BASE_URL + '/member/sigunup'
-      })
     }
   },
   methods: {

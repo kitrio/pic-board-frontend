@@ -44,7 +44,10 @@
 export default {
   name: 'PostList',
   props: {
-    postProps: Array
+    postProps: {
+      type: Array,
+      default: () => []
+    }
   },
   data () {
     return {
