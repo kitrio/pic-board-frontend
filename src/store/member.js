@@ -1,39 +1,47 @@
+import axios from 'axios'
 const state = {
-  myInfo: null
+  memberId: null,
+  nickname: null
 }
 
 const getters = {
-  getMyInfo: function (state) {
-    return state.myInfo
+  getMemberId (state) {
+    return state.memberId
+  },
+  getNickname (state) {
+    return state.nickname
   }
 }
 
 const mutations = {
-  setMyInfo (state, payload) {
-    state.myInfo = payload
+  setMemberId (state, payload) {
+    state.memberId = payload
+  },
+  setNickname (state, payload) {
+    state.nickname = payload
   }
 }
 
 const actions = {
   logIn ({ commit }, payload) {
-    commit('setMyInfo', payload)
+    commit('setMemberId', payload)
   },
-  logOut ({ commit }) {
-    axios.get('/member/logout')
+  logout ({ commit }) {
+    axios.post('/member/logOut')
       .then(() => {
-        commit('setMyInfo', null)
+        commit('setMemberId', null)
       })
       .catch(() => {
-        commit('setMyInfo', null)
+        commit('setNickname', null)
       })
   },
-  nicknameAction ({ commit }, payload) {
+  nicknameAction ({ commit }) {
     axios.post('/member/nickname')
       .then((response) => {
         alert(response.data + '님 로그인 되었습니다.')
-        this.$Vue.set(this.$store.state.member.myInfo, 'nickname', response.data)
+        commit('setNickname', response.data)
       }).catch(() => {
-
+        alert('서버에 접속 할수 없습니다.')
       })
   }
 }

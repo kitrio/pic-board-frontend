@@ -9,11 +9,12 @@
           </router-link>
           | {{ postOne.writeTime }}
         </v-card-text>
-        <v-img
-          :src="`${imgPath}${postOne.fileAltName}`"
-          class="white--text align-end"
-          max-width="800px"
-        />
+        <div class="imgbox">
+          <img
+            v-if="postOne.fileAltName !== undefined"
+            :src="`${imgPath}${postOne.fileAltName}`"
+          >
+        </div>
         <p class="text-content">
           {{ postOne.content }}
           <v-card-actions>
@@ -33,7 +34,7 @@
               <v-icon>mdi-share-variant</v-icon>
             </v-btn>
           </v-card-actions>
-          <v-card-actions v-if="memberInfo">
+          <v-card-actions v-if="memberInfo === postOne.memberId">
             <v-btn
               @click="modifyContent"
             >
@@ -51,6 +52,7 @@
   </v-app>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'Contents',
   data () {
@@ -60,25 +62,17 @@ export default {
     }
   },
   computed: {
-    memberInfo () {
-      if (this.$store.state.member.myInfo == null) {
-        return false
-      } else {
-        if (this.$store.state.member.myInfo.memberid === this.postOne.memberId) {
-          return true
-        } else {
-          return false
-        }
-      }
-    }
+    ...mapGetters({
+      memberInfo: 'member/getMemberId'
+    })
   },
-  beforeMount () {
+  mounted () {
     this.content()
   },
   methods: {
     content () {
       this.$axios({
-        methods: 'post',
+        method: 'get',
         headers: {
           Accept: 'application/json'
         },
@@ -97,6 +91,7 @@ export default {
       })
         .then(response => {
           this.postOne.goodCount += 1
+          console.log(this.memberInfo)
         })
         .catch(error => {
           console.log(error)
@@ -113,8 +108,8 @@ export default {
             alert('삭제 되었습니다.')
             this.$router.push('/')
           })
-          .catch(error => {
-            console.log(error)
+          .catch(() => {
+            alert('삭제 할 수 없습니다.')
           })
       }
     },
@@ -133,5 +128,11 @@ export default {
     font-size: 1.1em;
     color: black;
     margin: 2em
+  }
+  .imgbox {
+    max-width: 800px;
+  }
+  .imgbox > img {
+    width: 100%
   }
 </style>
