@@ -9,9 +9,9 @@ import Notfound from '@/components/NotFound'
 import SignUp from '@/components/member/SignUp'
 import Login from '@/components/member/Login'
 import UserInfo from '@/components/member/UserInfo'
+import store from './store/index'
 
 Vue.use(Router)
-import store from './store/index'
 
 const router = new Router({
   mode: 'history',
@@ -69,13 +69,12 @@ router.beforeEach((to, from, next) => {
 })
 
 const redirectLogin = (to, from, next) => {
-  if(store.getters['member/getMemberId'] === null){
+  if (store.getters['member/getMemberId'] === null) {
     alert('로그인이 필요합니다.')
     next('/user/login')
   } else {
     next()
   }
-  
 }
 
 export default router

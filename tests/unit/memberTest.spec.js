@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '../../src/store'
 
-describe('Login', () => { // 전체 컴포넌트
+describe('member store', () => {
   const memberTestId = 'tester'
   const testnickname = 'testnickname'
 
