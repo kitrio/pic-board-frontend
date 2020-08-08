@@ -89,5 +89,5 @@ export default {
 </script>
 
 <style scoped>
-  v-app {display:'flex'; align-content:'center'}
+  v-app {display:flex; align-content:center}
 </style>

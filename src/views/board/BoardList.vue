@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import PostList from './PostList.vue'
+import PostList from '@/components/board/PostList.vue'
 export default {
   name: 'BoardList',
   components: {

@@ -1,15 +1,15 @@
 import Vue from 'vue'
 
 import Router from 'vue-router'
-import BoardList from '@/components/board/BoardList'
-import Contents from '@/components/board/Contents'
-import Editor from '@/components/board/Editor'
-import SearchList from '@/components/board/SearchList'
-import Notfound from '@/components/NotFound'
-import SignUp from '@/components/member/SignUp'
-import Login from '@/components/member/Login'
-import UserInfo from '@/components/member/UserInfo'
-import store from './store/index'
+import BoardList from '@/views/board/BoardList'
+import Contents from '@/views/board/Contents'
+import Editor from '@/views/board/Editor'
+import SearchList from '@/views/board/SearchList'
+import Notfound from '@/views/NotFound'
+import SignUp from '@/views/member/SignUp'
+import Login from '@/views/member/Login'
+import UserInfo from '@/views/member/UserInfo'
+import store from '@/store/index'
 
 Vue.use(Router)
 

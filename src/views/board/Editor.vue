@@ -150,7 +150,7 @@ export default {
         })
     },
     initDefault () {
-      this.$store.dispatch('contents/content', null)
+      this.$store.dispatch('contents/contentAction', null)
     }
   },
   beforeRouteLeave (to, from, next) {
