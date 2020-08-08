@@ -1,7 +1,9 @@
 <template>
   <v-app id="contents">
     <v-container>
-      <v-card>
+      <v-card
+        class="card-container"
+      >
         <v-card-title v-text="postOne.title" />
         <v-card-text>
           <router-link :to="{name:'UserInfo', params:{ nickname: postOne.nickname } }">
@@ -13,10 +15,14 @@
           <img
             v-if="postOne.fileAltName !== undefined"
             :src="`${imgPath}${postOne.fileAltName}`"
+            class="image"
           >
         </div>
         <p class="text-content">
-          {{ postOne.content }}
+          <v-card-text>
+            {{ postOne.content }}
+          </v-card-text>
+
           <v-card-actions>
             <v-spacer />
             <v-label>
@@ -30,6 +36,7 @@
               <v-icon>mdi-heart</v-icon>
               <v-label>{{ postOne.goodCount }}</v-label>
             </v-btn>
+
             <v-btn icon>
               <v-icon>mdi-share-variant</v-icon>
             </v-btn>
@@ -59,7 +66,9 @@ export default {
   data () {
     return {
       imgPath: process.env.VUE_APP_FILE_URL,
-      postOne: []
+      postOne: {
+        nickname: ' '
+      }
     }
   },
   computed: {
@@ -81,7 +90,6 @@ export default {
       })
         .then(response => {
           this.postOne = response.data
-          this.writerid = response.data.memberId
         })
         .catch(e => console.log('e'))
     },
@@ -125,15 +133,21 @@ export default {
 }
 </script>
 <style scoped>
+  .card-container{
+    display: flex;
+    flex-direction: column;
+  }
   .text-content {
     font-size: 1.1em;
     color: black;
-    margin: 2em
+    font-family: Arial, Helvetica;
   }
   .imgbox {
-    max-width: 800px;
+    display: flex;
+    margin: auto;
+    max-width: 1000px;
   }
   .imgbox > img {
-    width: 100%
+    width: 100%;
   }
 </style>

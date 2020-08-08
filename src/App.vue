@@ -25,12 +25,16 @@
         v-if="memberInfo !=null"
         :to="{name: 'Editor'}"
       >
-        <v-btn
-          mdi-pencli
-        >
+        <v-btn>
+          <v-icon>mdi-account-circle</v-icon>
+        </v-btn>
+
+        <v-btn>
+          <v-icon>mdi-pencil</v-icon>
           글쓰기
         </v-btn>
       </router-link>
+
       <router-link
         v-if="memberInfo === null"
         :to="{name: 'Login'}"
@@ -48,6 +52,7 @@
       >
         로그아웃
       </v-btn>
+
       <router-link
         v-if="memberInfo === null"
         :to="{name: 'SignUp'}"
@@ -95,7 +100,6 @@
 </template>
 
 <script>
-
 import { mapGetters } from 'vuex'
 export default {
   name: 'App',
@@ -112,7 +116,9 @@ export default {
   methods: {
     logout () {
       this.$store.dispatch('member/logout', null)
-      this.$router.push({ name: 'BoardList'})
+      this.$router.push({
+        path: '/'
+      }).catch(error => {})
     },
     search () {
       this.$router.push({ name: 'SearchList', params: { keyword: this.keywords } })
