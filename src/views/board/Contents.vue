@@ -91,7 +91,12 @@ export default {
         .then(response => {
           this.postOne = response.data
         })
-        .catch(e => console.log('e'))
+        .catch(error => {
+          if (error.response.status === 404) {
+            alert('해당 게시물이 없습니다.')
+            this.$router.push('/')
+          }
+        })
     },
     goodCounter () {
       this.$axios({
