@@ -38,12 +38,12 @@
           </v-hover>
         </v-flex>
       </v-layout>
-      <button
-        id="moreContentbutton"
+      <input
+        class="moreContentbutton"
+        type="button"
+        value="더보기"
         @click="moreContent"
       >
-        더보기
-      </button>
     </v-container>
   </v-app>
 </template>
@@ -53,7 +53,6 @@ export default {
   name: 'SearchList',
   data () {
     return {
-      index: 5,
       posts: [],
       keyword: '',
       startOffset: 0,
@@ -80,11 +79,12 @@ export default {
         url: `/list/search?keyword=${this.keyword}&startpage=${this.startOffset}&endpage=${this.lastOffset}`
       })
         .then(response => {
-          this.posts = response.data
+          this.posts.push(...response.data)
         })
         .catch(e => console.log(e))
     },
     moreContent () {
+      this.startOffset += 11
       this.lastOffset += 10
       this.search()
     }
@@ -93,10 +93,14 @@ export default {
 </script>
 
 <style>
-  #moreContentbutton {
-    background-color: gray;
-    height: 5em;
-    width: 80%;
-    margin: 5em
+    .moreContentbutton {
+        display: flex;
+        background-color: rgb(0, 127, 212);
+        color:whitesmoke;
+        height: 30px;
+        width: 280px;
+        margin: 30px auto;
+        align-content: center;
+        border-radius: 1em;
   }
 </style>
